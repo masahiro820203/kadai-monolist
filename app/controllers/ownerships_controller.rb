@@ -8,10 +8,16 @@ class OwnershipsController < ApplicationController
       @item = Item.new(read(results.first))
       @item.save
     end
-      
+    
+    # Wantとして保存
     if params[:type] == 'Want'
       current_user.want(@item)
       flash[:success] = '商品をWantしました。'
+    end
+    # Haveとして保存
+    if params[:type] == 'Have'
+      current_user.have(@item)
+      flash[:success] = '商品をHaveしました。'
     end
     
     redirect_back(fallback_location: root_path)
@@ -20,9 +26,14 @@ class OwnershipsController < ApplicationController
   def destroy
     @item = Item.find(params[:item_id])
     
+    # Want削除
     if params[:type] == 'Want'
       current_user.unwant(@item)
       flash[:success] = "商品のWantを解除しました。"
+    end
+    if params[:type] == 'Have'
+      current_user.unhave(@item)
+      flash[:success] ='商品のHaveを解除しました。'
     end
     
     redirect_back(fallback_location: root_path)
