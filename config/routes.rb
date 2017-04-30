@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
 
-  get 'ownerships/create'
-
-  get 'ownerships/destroy'
-
-  get 'items/new'
-
   root to: 'toppages#index'
-  
+
+  get 'rankings/want', to: 'rankings#want'
+    
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
